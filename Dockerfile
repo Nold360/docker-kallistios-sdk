@@ -1,14 +1,14 @@
-############################################################
-# Dockerfile to build KallistiOS Toolchain for Dreamcast
-############################################################
+########################################################################
+# Dockerfile to build KallistiOS Toolchain + Additional Dreamcast Tools
+########################################################################
 FROM debian:jessie
 
 ENV DEBIAN_FRONTEND noninteractive
 
-# Prerequirements / second line for libs / third line for mksdiso-package
+# Prerequirements / second line for libs / third line for mksdiso & img4dc
 RUN apt-get update && apt-get -y install build-essential git curl texinfo python subversion \
 	libjpeg-dev libpng++-dev \
-	genisoimage p7zip && \
+	genisoimage p7zip cmake && \
 	apt-get clean
 
 # Fetch sources
@@ -30,10 +30,16 @@ RUN cd /opt/toolchains/dc/kos/utils/dc-chain && \
 # Build KOS-/Ports
 RUN cd /opt/toolchains/dc/kos && bash -c 'source /opt/toolchains/dc/kos/environ.sh; make ; make kos-ports_all'
 
-# Add mksdiso-pack for additinal DC tools
-# FIXME: No compilation ATM, just x86 binaries & some scripts
+# Additinal DC Tools:
+#  - mksdiso Toolkit
+#  - cdi4dc & mds4cd (iso converter)
+#
 RUN git clone --depth=1 https://github.com/Nold360/mksdiso /opt/mksdiso && \
-	cd /opt/mksdiso && make install
+	cd /opt/mksdiso/src && make all && make install
+
+RUN git clone --depth=1 https://github.com/kazade/img4dc /opt/img4dc && \
+	mkdir /opt/img4dc/build && cd /opt/img4dc/build && cmake .. && make && \
+	mv mds4dc/mds4dc cdi4dc/cdi4dc /usr/local/bin/
 
 # Volume to compile project sourcecode
 VOLUME /src
