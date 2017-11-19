@@ -30,6 +30,7 @@ function usage {
 	echo -e " - cdi\t\t convert iso-image to cdi"
 	echo
 	echo "You can also run things like 'dcbuild bash' to get a shell inside the container"
+	echo "Or 'dcbuild mksdiso' to convert your project / a CDI-Image to Dreamshell SDISO"
 }
 
 if [ -z "$ACTION" ] ; then
@@ -44,14 +45,13 @@ if [ "$ACTION" == "clean" ] ; then
 	rm -rf iso/
 	rm -f *.iso *.cdi main.bin IP.BIN IP.TMPL ip.txt
 	set +x
-# "Normale" make, includes all additional options f.E. "dcbuild make all"
-elif [ "$ACTION" == "make" ] ; then
-	$DCRUN $@
+
 # Generate IP.BIN from scratch, change "ip.txt" to your needs and run "dcbuild ip" again
 # to customize IP.BIN
 elif [ "$ACTION" == "ip" ] ; then
 	[ ! -f ip.txt ] || [ ! -f IP.TMPL ] && $DCRUN cp /opt/mksdiso/src/makeip/{ip.txt,IP.TMPL} /src
 	$DCRUN makeip ip.txt IP.BIN
+
 # Create Binary from ELF
 elif [ "$ACTION" == "bin" ] ; then
 	ELF=$2
@@ -71,6 +71,7 @@ elif [ "$ACTION" == "cdi" ] || [ "$ACTION" == "iso" ] ; then
 	[ ! -f IP.BIN ] && $0 ip
 	$DCRUN genisoimage -V $GAME_TITLE -G IP.BIN -joliet -rock -l -o $ISO iso
 else
+	# Otherwise just run the command directly into the container
 	$DCRUN $@
 fi
 
