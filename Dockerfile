@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND noninteractive
 # Prerequirements / second line for libs / third line for mksdiso & img4dc
 RUN apt-get update && apt-get -y install build-essential git curl texinfo python subversion \
 	libjpeg-dev libpng++-dev \
-	genisoimage p7zip cmake && \
+	genisoimage p7zip-full cmake && \
 	apt-get clean
 
 # Fetch sources
@@ -35,7 +35,9 @@ RUN cd /opt/toolchains/dc/kos && bash -c 'source /opt/toolchains/dc/kos/environ.
 #  - cdi4dc & mds4cd (iso converter)
 #
 RUN git clone --depth=1 https://github.com/Nold360/mksdiso /opt/mksdiso && \
-	cd /opt/mksdiso/src && make all && make install
+	cd /opt/mksdiso/ && cp -r mksdiso /root/.mksdiso && \
+	cp bin/burncdi bin/mksdiso /usr/local/bin/ && \
+	cd src && make all && make install && cp binhack/bin/binhack32 /usr/local/bin/
 
 RUN git clone --depth=1 https://github.com/kazade/img4dc /opt/img4dc && \
 	mkdir /opt/img4dc/build && cd /opt/img4dc/build && cmake .. && make && \
