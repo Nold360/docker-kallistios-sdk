@@ -1,6 +1,6 @@
 # Docker KallistiOS - Dreamcast SDK
 This image provides a full powered [KallistiOS](http://gamedev.allusion.net/softprj/kos/) SDK for Developing Homebrew for the Sega Dreamcast.
-It has been build, so you don't have to compile/setup the KOS-Toolchain yourself & keep your system clean.
+It has been build, so you don't have to compile/setup the KOS-Toolchain yourself & keep your system clean. If you have Docker installed on your system - it's like one command to compile your code using KOS!
 
 ## Included Software
 This Docker image contains:
@@ -10,7 +10,19 @@ This Docker image contains:
  - mds4dc & cdi4dc for Image creation ([source](https://github.com/kazade/img4dc))
  - makeip for custom IP.BIN creation (taken from mksdiso)
 
-I've also created a wrapper-script called "**[dcbuild](https://github.com/Nold360/docker-kallistios-sdk/blob/master/dcbuild.sh)**" which already handles some development tasks for you!
+List of additional Dreamcast-related tools:
+ - binhack32
+ - burncdi
+ - cdi4dc
+ - cdirip
+ - isofix
+ - makeip
+ - mds4dc
+ - mksdiso
+ - scramble
+
+I've also created a wrapper-script called "**[dcbuild](https://github.com/Nold360/docker-kallistios-sdk/blob/master/dcbuild.sh)**" which handles some development tasks for you!
+Here is a quick video demonstation of dcbuild + this container here: https://www.youtube.com/watch?v=yjm4iSrerM0
 
 ## Using the image
 If you have created your first KOS project and built a Makefile for it, you can compile your sourcecode like this:
