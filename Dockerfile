@@ -43,11 +43,7 @@ RUN git clone --depth=1 https://github.com/kazade/img4dc /opt/img4dc && \
 	mkdir /opt/img4dc/build && cd /opt/img4dc/build && cmake .. && make && \
 	mv mds4dc/mds4dc cdi4dc/cdi4dc /usr/local/bin/
 
-# Add user
-RUN useradd -s/bin/bash -m build
-
 # Volume to compile project sourcecode
-USER build
 VOLUME /src
 WORKDIR /src
 COPY ./run.sh /run.sh
