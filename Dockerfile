@@ -1,38 +1,27 @@
 ########################################################################
 # Dockerfile to build minimal KallistiOS Toolchain
 ########################################################################
-FROM debian:jessie
+FROM nold360/kallistios-sdk:minimal
 
-ENV DEBIAN_FRONTEND noninteractive
+RUN git clone --depth=1 https://github.com/nold360/DreamShell /opt/toolchains/dc/kos/ds
 
-# Prerequirements / second line for libs / third line for mksdiso & img4dc
-RUN apt-get update && apt-get -y install build-essential git curl texinfo python subversion \
-	libjpeg-dev libpng++-dev \
-	genisoimage p7zip-full cmake && \
-	apt-get clean
-
-# Fetch sources
-RUN mkdir -p /opt/toolchains/dc && \
-	git clone --depth=1 https://github.com/KallistiOS/KallistiOS /opt/toolchains/dc/kos && \
-	git clone --depth=1 https://github.com/KallistiOS/kos-ports  /opt/toolchains/dc/kos-ports
-
-# Setup KOS Environment
-RUN cp /opt/toolchains/dc/kos/doc/environ.sh.sample /opt/toolchains/dc/kos/environ.sh && \
-	echo 'source /opt/toolchains/dc/kos/environ.sh' >> /root/.bashrc
+# Download & Unpack Toolchain
+WORKDIR /opt/toolchains/dc/kos/ds/sdk/toolchain
+RUN bash download.sh && \
+	bash unpack.sh && \
+	rm *.gz *.bz2
 
 # Build Toolchain
-RUN cd /opt/toolchains/dc/kos/utils/dc-chain && \
-	bash download.sh && \
-	bash unpack.sh && \
-	make erase=1 && \
-	bash cleanup.sh
+RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make makejobs=-j2 verbose=1 erase=1'
 
-# Build KOS-/Ports
-RUN cd /opt/toolchains/dc/kos && bash -c 'source /opt/toolchains/dc/kos/environ.sh; make ; make kos-ports_all'
+# Build DS-Libs
+WORKDIR /opt/toolchains/dc/kos/ds/lib
+RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make'
 
-# Volume to compile project sourcecode
-VOLUME /src
-WORKDIR /src
-COPY ./run.sh /run.sh
-ENTRYPOINT [ "/run.sh" ]
-CMD [ "make" ]
+# Rebuild patched KOS
+WORKDIR /opt/toolchains/dc/kos
+RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make'
+
+# Test-Build Dreamshell
+WORKDIR /opt/toolchains/dc/kos/ds
+RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make'
