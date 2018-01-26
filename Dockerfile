@@ -21,14 +21,18 @@ RUN cp /opt/toolchains/dc/kos/doc/environ.sh.sample /opt/toolchains/dc/kos/envir
 	echo 'source /opt/toolchains/dc/kos/environ.sh' >> /root/.bashrc
 
 # Build Toolchain
-RUN cd /opt/toolchains/dc/kos/utils/dc-chain && \
-	bash download.sh && \
+WORKDIR /opt/toolchains/dc/kos/utils/dc-chain
+RUN bash download.sh && \
 	bash unpack.sh && \
 	make erase=1 && \
 	bash cleanup.sh
 
+WORKDIR /opt/toolchains/dc/kos/utils/kmgenc 
+RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make'
+
 # Build KOS-/Ports
-RUN cd /opt/toolchains/dc/kos && bash -c 'source /opt/toolchains/dc/kos/environ.sh; make ; make kos-ports_all'
+WORKDIR /opt/toolchains/dc/kos
+RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make ; make kos-ports_all'
 
 # Volume to compile project sourcecode
 VOLUME /src
