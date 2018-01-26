@@ -1,7 +1,7 @@
 ########################################################################
-# Dockerfile to build minimal KallistiOS Toolchain
+# Dockerfile to build KallistiOS + DreamShell SDK
 ########################################################################
-FROM nold360/kallistios-sdk:minimal
+FROM nold360/kallistios-sdk:latest
 
 RUN git clone --depth=1 https://github.com/nold360/DreamShell /opt/toolchains/dc/kos/ds
 
@@ -24,4 +24,6 @@ RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make'
 
 # Test-Build Dreamshell
 WORKDIR /opt/toolchains/dc/kos/ds
-RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make'
+RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make && make clean'
+
+WORKDIR /src
