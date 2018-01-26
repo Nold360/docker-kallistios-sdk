@@ -3,6 +3,7 @@
 ########################################################################
 FROM nold360/kallistios-sdk:minimal
 
+RUN apt-get update && apt-get install -y autoconf && apt-get clean
 RUN git clone --depth=1 https://github.com/nold360/DreamShell /opt/toolchains/dc/kos/ds
 
 # Download & Unpack Toolchain
@@ -14,14 +15,14 @@ RUN bash download.sh && \
 # Build Toolchain
 RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make makejobs=-j2 verbose=1 erase=1'
 
-# Build DS-Libs
-WORKDIR /opt/toolchains/dc/kos/ds/lib
-RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make'
-
 # Rebuild patched KOS
 WORKDIR /opt/toolchains/dc/kos
 RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make'
 
+# Test-Build DS-Libs
+WORKDIR /opt/toolchains/dc/kos/ds/lib
+RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make'
+
 # Test-Build Dreamshell
 WORKDIR /opt/toolchains/dc/kos/ds
-RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make'
+RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make -j2 && make clean'
