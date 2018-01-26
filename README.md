@@ -2,24 +2,28 @@
 This image provides a full powered [KallistiOS](http://gamedev.allusion.net/softprj/kos/) SDK for Developing Homebrew for the Sega Dreamcast.
 It has been build, so you don't have to compile/setup the KOS-Toolchain yourself & keep your system clean. If you have Docker installed on your system - it's like one command to compile your code using KOS!
 
-## Included Software
-This Docker image contains:
- - Based on Debian "Jessie"
- - Latest KallisiOS Toolchain + Ported Libraries
- - Latest [mksdiso](https://github.com/Nold360/mksdiso) Toolkit for creating SD-ISOs, scrambling & more
- - mds4dc & cdi4dc for Image creation ([source](https://github.com/kazade/img4dc))
- - makeip for custom IP.BIN creation (taken from mksdiso)
+## Image Tags & Included Software
+|nold360/kallistios-sdk:minimal|
+|---|
+|Based on Debian Jessie|
+|Latest KallisiOS SDK + Ported Libraries|
 
-List of additional Dreamcast-related tools:
- - binhack32
- - burncdi
- - cdi4dc
- - cdirip
- - isofix
- - makeip
- - mds4dc
- - mksdiso
- - scramble
+|nold360/kallistios-sdk:latest|
+|---|
+|Based on nold360/kallistios-sdk:minimal|
+|Latest [mksdiso](https://github.com/Nold360/mksdiso) Toolkit for creating SD-ISOs, scrambling & more|
+|mds4dc & cdi4dc for Image creation ([source](https://github.com/kazade/img4dc))|
+|makeip for custom IP.BIN creation (taken from mksdiso)|
+| Other Dreamcast-related tools: binhack32, burncdi, cdirip, isofix, makeip, scramble|
+
+|nold360/kallistios-sdk:dreamshell|
+|---|
+|Based on nold360/kallistios-sdk:latest|
+|Latest [DreamShell](https://github.com/Nold360/DreamShell)* Sourcecode  & Toolchain|
+|Patched GCC 5.2.0 & KOS-Toolchain|
+|More Ported Libs (SDL, ...)|
+
+\* I've forked Dreamshell, so I don't have to do so much patching in the Dockerfile. I made no modifications to DS itself!
 
 I've also created a wrapper-script called "**[dcbuild](https://github.com/Nold360/docker-kallistios-sdk/blob/master/dcbuild.sh)**" which handles some development tasks for you!
 Here is a quick video demonstation of dcbuild + this container here: https://www.youtube.com/watch?v=yjm4iSrerM0
