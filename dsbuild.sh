@@ -14,12 +14,12 @@ fi
 # Environment Configuration Defaults
 ISO=${ISO:-mygame.iso}
 GAME_TITLE=${GAME_TITLE:-MY_GAME}
-DOCKER_IMAGE="nold360/kallistios-sdk"
+DOCKER_IMAGE="kallistios-sdk:dreamshell"
 DCRUN="docker run -ti -v $(pwd):/src $DOCKER_IMAGE"
 
 function usage {
-	echo "Wrapper Script for Docker-Image nold360/kallistios-sdk"
-	echo "By Nold 2017 - http://github.com/nold360/docker-kallistios-sdk"
+	echo "Wrapper Script for Docker-Image nold360/kallistios-sdk:dreamshell"
+	echo "By Nold 2018 - http://github.com/nold360/docker-kallistios-sdk"
 	echo
 	echo "Usage: $0 <make|ip|clean|bin|iso|cdi|...> [args...]"
 	echo -e " - make\t\t Build Project"
