@@ -9,8 +9,9 @@ stages:
  - release
 
 variables:
+  RELEASE_TAG: minimal
   TEST_IMAGE: hub.nold.in/$CI_PROJECT_PATH:$CI_BUILD_REF
-  RELEASE_IMAGE: hub.nold.in/$CI_PROJECT_PATH:latest
+  RELEASE_IMAGE: hub.nold.in/$CI_PROJECT_PATH:$RELEASE_TAG
   DOCKER_DRIVER: overlay
 
 before_script:
