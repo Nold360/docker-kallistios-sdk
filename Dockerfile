@@ -1,7 +1,7 @@
 ########################################################################
 # Dockerfile to build KallistiOS Toolchain + Additional Dreamcast Tools
 ########################################################################
-FROM hub.nold.in/nold/kallistios-sdk:minimal
+FROM hub.nold.in/nold/docker-kallistios-sdk:minimal
 
 # Additinal DC Tools:
 #  - mksdiso Toolkit
