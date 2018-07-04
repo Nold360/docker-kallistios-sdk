@@ -6,7 +6,7 @@ It has been build, so you don't have to compile/setup the KOS-Toolchain yourself
 |nold360/kallistios-sdk:minimal|
 |---|
 |Based on Debian Jessie|
-|Latest KallisiOS SDK + Ported Libraries|
+|Latest KallistiOS SDK + Ported Libraries|
 
 |nold360/kallistios-sdk:latest|
 |---|
@@ -31,14 +31,14 @@ Here is a quick video demonstation of dcbuild + this container here: https://www
 ## Using the image
 If you have created your first KOS project and built a Makefile for it, you can compile your sourcecode like this:
 ```
-$ docker run -ti -v $(pwd):/src nold360/kallisios-sdk make
+$ docker run -ti -v $(pwd):/src nold360/kallistios-sdk make
 ```
 
 The Volume `-v $(pwd):/src`will include your current working directory (aka your KOS-project directory) into the container.
 The `make` command at the end is default and can be changed as needed. (Like `make dreamcast` or whatever).
 
 ## Installing dcbuild
-You will find an additional shellscript called "dcbuild" in the [Github](https://github.com/nold360/docker-kallisios-sdk) of this container.
+You will find an additional shellscript called "dcbuild" in the [Github](https://github.com/nold360/docker-kallistios-sdk) of this container.
 Install the script inside the PATH of your **HOST** running this container:
 ```
 $ sudo wget -O/usr/local/bin/dcbuild https://raw.githubusercontent.com/Nold360/docker-kallistios-sdk/master/dcbuild.sh
@@ -152,5 +152,5 @@ Title of your game (will be used in ISO, **not** IP.BIN)
 `export GAME_TITLE="MY_AWESOME_GAME"`
 
 ## Troubleshooting
-You can run bash in your SDK Environemnt, too. This might help finding the problem. Also feel free to open issues on [github](https://github.com/Nold360/docker-kallisios-sdk)
-`$ docker run -ti -v $(pwd):/src nold360/kallisios-sdk bash`
+You can run bash in your SDK Environemnt, too. This might help finding the problem. Also feel free to open issues on [github](https://github.com/Nold360/docker-kallistios-sdk)
+`$ docker run -ti -v $(pwd):/src nold360/kallistios-sdk bash`
