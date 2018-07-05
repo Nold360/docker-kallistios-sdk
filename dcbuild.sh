@@ -15,7 +15,7 @@ fi
 ISO=${ISO:-mygame.iso}
 GAME_TITLE=${GAME_TITLE:-MY_GAME}
 DOCKER_IMAGE="nold360/kallistios-sdk"
-DCRUN="docker run -ti -v $(pwd):/src $DOCKER_IMAGE"
+DCRUN="docker run --rm -ti -v $(pwd):/src $DOCKER_IMAGE"
 
 function usage {
 	echo "Wrapper Script for Docker-Image nold360/kallistios-sdk"
