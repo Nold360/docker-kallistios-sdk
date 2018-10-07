@@ -4,36 +4,41 @@ services:
   - docker:dind
 
 stages:
- - build
-# - test
+ - build:minimal
+ - build:default
+ - build:dreamshell
  - release
 
 variables:
-  RELEASE_TAG: latest
-  TEST_IMAGE: hub.nold.in/$CI_PROJECT_PATH:$CI_BUILD_REF
-  RELEASE_IMAGE: hub.nold.in/$CI_PROJECT_PATH:$RELEASE_TAG
   DOCKER_DRIVER: overlay
 
 before_script:
  - docker info
  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN hub.nold.in
 
-build:
+build:minimal:
  stage: build
+ variables:
+  RELEASE_TAG: minimal
+  RELEASE_IMAGE: hub.nold.in/$CI_PROJECT_PATH:$RELEASE_TAG
  script:
-  - docker build -t $TEST_IMAGE .
-  - docker push $TEST_IMAGE
+  - docker build -t $RELEASE_IMAGE minimal/Dockerfile
+  - docker push $RELEASE_IMAGE
 
-#test:
-# stage: test
-# script:
-#  - docker run --rm $TEST_IMAGE /test.sh
-
-release:
- stage: release
+build:default:
+ stage: build
+ variables:
+  RELEASE_TAG: latest
+  RELEASE_IMAGE: hub.nold.in/$CI_PROJECT_PATH:$RELEASE_TAG
  script:
-    - docker pull $TEST_IMAGE
-    - docker tag $TEST_IMAGE $RELEASE_IMAGE
-    - docker push $RELEASE_IMAGE
- only:
-  - master
+  - docker build -t $RELEASE_IMAGE default/Dockerfile
+  - docker push $RELEASE_IMAGE
+
+build:dreamshell:
+ stage: build
+ variables:
+  RELEASE_TAG: dreamshell
+  RELEASE_IMAGE: hub.nold.in/$CI_PROJECT_PATH:$RELEASE_TAG
+ script:
+  - docker build -t $RELEASE_IMAGE dreamshell/Dockerfile
+  - docker push $RELEASE_IMAGE
