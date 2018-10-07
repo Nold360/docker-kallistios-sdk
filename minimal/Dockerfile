@@ -13,7 +13,7 @@ RUN apt-get update && apt-get -y install build-essential git curl texinfo python
 
 # Fetch sources
 RUN mkdir -p /opt/toolchains/dc && \
-	git clone --depth=1 https://github.com/KallistiOS/KallistiOS /opt/toolchains/dc/kos && \
+	git clone --depth=1 https://github.com/Nold360/KallistiOS    /opt/toolchains/dc/kos && \
 	git clone --depth=1 https://github.com/KallistiOS/kos-ports  /opt/toolchains/dc/kos-ports
 
 # Setup KOS Environment
@@ -28,11 +28,11 @@ RUN bash download.sh && \
 	bash cleanup.sh
 
 WORKDIR /opt/toolchains/dc/kos/utils/kmgenc 
-RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make'
+RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh ; make'
 
 # Build KOS-/Ports
 WORKDIR /opt/toolchains/dc/kos
-RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh; make ; make kos-ports_all'
+RUN bash -c 'source /opt/toolchains/dc/kos/environ.sh ; make && make kos-ports_all'
 
 # Volume to compile project sourcecode
 VOLUME /src
