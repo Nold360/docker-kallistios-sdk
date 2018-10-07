@@ -22,7 +22,7 @@ build_minimal:
   RELEASE_TAG: minimal
   RELEASE_IMAGE: hub.nold.in/$CI_PROJECT_PATH:$RELEASE_TAG
  script:
-  - docker build -t $RELEASE_IMAGE minimal/Dockerfile
+  - docker build -t $RELEASE_IMAGE minimal/
   - docker push $RELEASE_IMAGE
 
 build_default:
@@ -31,7 +31,7 @@ build_default:
   RELEASE_TAG: latest
   RELEASE_IMAGE: hub.nold.in/$CI_PROJECT_PATH:$RELEASE_TAG
  script:
-  - docker build -t $RELEASE_IMAGE default/Dockerfile
+  - docker build -t $RELEASE_IMAGE default/
   - docker push $RELEASE_IMAGE
 
 build_dreamshell:
@@ -40,5 +40,5 @@ build_dreamshell:
   RELEASE_TAG: dreamshell
   RELEASE_IMAGE: hub.nold.in/$CI_PROJECT_PATH:$RELEASE_TAG
  script:
-  - docker build -t $RELEASE_IMAGE dreamshell/Dockerfile
+  - docker build -t $RELEASE_IMAGE dreamshell/
   - docker push $RELEASE_IMAGE
