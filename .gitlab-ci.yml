@@ -4,9 +4,9 @@ services:
   - docker:dind
 
 stages:
- - build_minimal
- - build_default
- - build_dreamshell
+ - build:minimal
+ - build:default
+ - build:dreamshell
  - release
 
 variables:
@@ -17,7 +17,7 @@ before_script:
  - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN hub.nold.in
 
 build_minimal:
- stage: build
+ stage: build:minimal
  variables:
   RELEASE_TAG: minimal
   RELEASE_IMAGE: hub.nold.in/$CI_PROJECT_PATH:$RELEASE_TAG
@@ -26,7 +26,7 @@ build_minimal:
   - docker push $RELEASE_IMAGE
 
 build_default:
- stage: build
+ stage: build:default
  variables:
   RELEASE_TAG: latest
   RELEASE_IMAGE: hub.nold.in/$CI_PROJECT_PATH:$RELEASE_TAG
@@ -35,7 +35,7 @@ build_default:
   - docker push $RELEASE_IMAGE
 
 build_dreamshell:
- stage: build
+ stage: build:dreamshell
  variables:
   RELEASE_TAG: dreamshell
   RELEASE_IMAGE: hub.nold.in/$CI_PROJECT_PATH:$RELEASE_TAG
