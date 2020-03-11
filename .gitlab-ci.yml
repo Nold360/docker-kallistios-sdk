@@ -11,6 +11,7 @@ stages:
 
 variables:
   DOCKER_DRIVER: overlay
+  DOCKER_TLS_CERTDIR: ""
 
 before_script:
  - docker info
