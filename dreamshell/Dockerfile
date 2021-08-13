@@ -1,7 +1,7 @@
 ########################################################################
 # Dockerfile to build minimal KallistiOS Toolchain
 ########################################################################
-FROM hub.nold.in/nold/docker-kallistios-sdk:minimal
+FROM docker.io/nold360/kallistios-sdk:minimal
 
 RUN apt-get update && apt-get install -y autoconf && apt-get clean
 RUN git clone --depth=1 https://github.com/nold360/DreamShell /opt/toolchains/dc/kos/ds
