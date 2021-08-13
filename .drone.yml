@@ -1,0 +1,45 @@
+---
+kind: pipeline
+name: build
+type: kubernetes
+
+steps:
+- name: build-minimal
+  image: plugins/buildah-docker
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    repo: nold360/kallistios-sdk
+    dockerfile: minimal/Dockerfile
+    context: minimal/
+    tags:
+      - minimal
+
+- name: build-default
+  image: plugins/buildah-docker
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    repo: nold360/kallistios-sdk
+    dockerfile: default/Dockerfile
+    context: default/
+    tags:
+      - default
+      - latest
+
+- name: build-dreamshell
+  image: plugins/buildah-docker
+  settings:
+    username:
+      from_secret: docker_username
+    password:
+      from_secret: docker_password
+    repo: nold360/kallistios-sdk
+    dockerfile: dreamshell/Dockerfile
+    context: dreamshell/
+    tags:
+      - dreamshell
